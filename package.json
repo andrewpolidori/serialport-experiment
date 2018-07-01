@@ -1,0 +1,14 @@
+{
+    "name": "serialport-experiment",
+    "version": "1.0.0",
+    "description": "A basic electron app to read serialport data",
+    "repository": "andrewpolidori/serialport-experiment",
+    "main": "main/app.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "license": "ISC",
+    "devDependencies": {
+        "electron": "latest"
+    }
+}
