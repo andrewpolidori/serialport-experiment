@@ -3,13 +3,58 @@
   <head>
     <meta charset="UTF-8">
     <title>Hello World!</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   </head>
   <body>
     <h1>Hello World!</h1>
 
     <script>
       // You can also require other files to run in this process
-      require('./renderer.js')
+      function rand() { 
+  return Math.random();
+}
+(function() {
+var d3 = Plotly.d3;
+
+var WIDTH_IN_PERCENT_OF_PARENT = 60,
+    HEIGHT_IN_PERCENT_OF_PARENT = 80;
+
+var gd3 = d3.select('body')
+    .append('div')
+    .style({
+        width: WIDTH_IN_PERCENT_OF_PARENT + '%',
+        'margin-left': (100 - WIDTH_IN_PERCENT_OF_PARENT) / 2 + '%',
+
+        height: HEIGHT_IN_PERCENT_OF_PARENT + 'vh',
+        'margin-top': (100 - HEIGHT_IN_PERCENT_OF_PARENT) / 2 + 'vh'
+    });
+
+var gd = gd3.node();
+
+gd.id="gd"
+
+Plotly.plot(gd, [{
+  y: [1,2,3].map(rand),
+  mode: 'lines',
+  line: {color: '#80CAF6'}
+}]);
+
+window.onresize = function() {
+    Plotly.Plots.resize(gd);
+};
+
+})();
+
+var cnt = 0;
+
+var interval = setInterval(function() {
+  
+  Plotly.extendTraces(gd, {
+    y: [[rand()]]
+  }, [0])
+
+  if(cnt === 100) clearInterval(interval);
+}, 1);
     </script>
   </body>
 </html>
