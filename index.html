@@ -3,13 +3,32 @@
   <head>
     <meta charset="UTF-8">
     <title>Hello World!</title>
+    <script src=smoothie.js></script>
   </head>
-  <body>
-    <h1>Hello World!</h1>
+  <body onload=createTimeline()>
+    <h1>This is a chart</h1>
+
+    <canvas id="chart" style="width:100%; height:400px;"></canvas>
 
     <script>
-      // You can also require other files to run in this process
-      require('./renderer.js')
+    
+      // Randomly add a data point every 500ms
+    var random = new TimeSeries();
+
+    function createTimeline(){
+    var chart = new SmoothieChart({grid:{borderVisible:false},timestampFormatter:SmoothieChart.timeFormatter,horizontalLines:[{color:'#ffffff',lineWidth:1,value:0},{color:'#880000',lineWidth:2,value:3333},{color:'#880000',lineWidth:2,value:-3333}]}),
+    canvas = document.getElementById('smoothie-chart'),
+    series = new TimeSeries();
+
+    chart.addTimeSeries(random, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 2 });
+    chart.streamTo(document.getElementById("chart"), 986);
+}
+
+
+setInterval(function() {
+    random.append(new Date().getTime(), Math.random() * 10000);
+}, 500);
     </script>
+
   </body>
 </html>
